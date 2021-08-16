@@ -11,6 +11,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CoreMyBatisMain {
 	//@formatter:off
@@ -80,60 +81,19 @@ public class CoreMyBatisMain {
 		sqlSession.update("deletePet", inputMap);
 		sqlSession.commit(); 
 	}
-
 	public static void main(String[] args) {
 		try {
-			CoreMyBatisMain main = new CoreMyBatisMain();
-
-			String dogName = "깜두";
-			PetDVO pet = main.getPetObject(dogName);
+			ClassPathXmlApplicationContext appContext =
+				new ClassPathXmlApplicationContext(
+				  new String[]{"applicationContext-myBatis.xml"});
 			
-			System.out.println("삭제 전: " + 
-					((pet == null) ? "그런 동물 없습니다."  : pet));
-			if (pet != null) {
-				main.deletePet("강아지", dogName);
-			}
-			
-			pet = main.getPetObject(dogName);
-			System.out.println("삭제 후: " + ((pet == null) 
-					? "그런 동물 없습니다."  : pet));
-			
-			PetDVO petDataObj = new PetDVO();
-			String name = "구름이";			 
-			petDataObj.setOwner("최주인");
-			petDataObj.setName(name); 
-			main.updatePetData(petDataObj);
-			
-			PetDVO petObj = new PetDVO();
-			petObj.setName("구름이");
-			petObj.setOwner("김재연");
-			petObj.setSpecies("강아지");
-			petObj.setSex('m');
-			Date today = getDate(2020, 11, 15);
-			petObj.setBirth(today);
+			PetDAO petDaoImpl =
+					(PetDAO)appContext.getBean("petDaoImpl");
 			/**
-			 * 생성된 애완동물을 DB pet 테이블에 삽입
+			 * 애완동물 목록 길이 출력
 			 */
-			int id = main.createPet(petObj);
-			System.out.println("새 애완동물 ID : " + id);
-
-			System.out.println(main.getAllSpecies());
-
-			System.out.println("암놈 목록");
-			for (PetDVO p : main.selectByGender("f")) {
-				System.out.println(p);
-			}
-			System.out.println("숫놈 목록");
-			for (PetDVO p : main.selectByGender("m")) {
-				System.out.println(p);
-			}
-			// 누리 소유자 이름 출력
-			String petName = "누리";
-			pet = main.getPetObject(petName);
-			System.out.println(petName + ": " + pet.getOwner());
-			// Printing pets data
-			List<PetDVO> allPets = main.getAllPetsData();
-			System.out.println("--- 애완동물 숫자 ----" + allPets.size());
+			List <PetDVO> pets = petDaoImpl.getAllPetsData();
+			System.out.println("--- pets ---" + pets.size());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
