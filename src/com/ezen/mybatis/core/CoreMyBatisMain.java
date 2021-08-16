@@ -11,15 +11,18 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CoreMyBatisMain {
 	//@formatter:off
-	public PetDVO getPetObject(String petName) throws Exception {
+	public PetDVO getPetObject(String petName) 
+			throws Exception {
+		
 		HashMap<String, String> inputMap 
 			= new HashMap<String, String>();
 		inputMap.put("name", petName);
-		return (PetDVO) getSqlSession().selectOne("getPetObject", 
-				inputMap);
+		return (PetDVO) getSqlSession().selectOne(
+				"getPetObject", inputMap);
 	}
 
 	public int createPet(PetDVO petDVO) throws Exception {
@@ -40,14 +43,6 @@ public class CoreMyBatisMain {
 
 		Long newID = (Long) inputMap.get("id");
 		return newID.intValue();
-	}
-
-	private static Date getDate(int year, int month, int date) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR, year);
-		cal.set(Calendar.MONTH, month - 1);
-		cal.set(Calendar.DAY_OF_MONTH, date);
-		return cal.getTime();
 	}
 	
 	public void updatePetData(PetDVO petDVO) throws Exception {
@@ -82,58 +77,17 @@ public class CoreMyBatisMain {
 	}
 
 	public static void main(String[] args) {
-		try {
-			CoreMyBatisMain main = new CoreMyBatisMain();
+		try (ClassPathXmlApplicationContext appContext = new 
+				ClassPathXmlApplicationContext(new String[] 
+						{ "applicationContext-myBatis.xml" })) {
 
-			String dogName = "깜두";
-			PetDVO pet = main.getPetObject(dogName);
-			
-			System.out.println("삭제 전: " + 
-					((pet == null) ? "그런 동물 없습니다."  : pet));
-			if (pet != null) {
-				main.deletePet("강아지", dogName);
-			}
-			
-			pet = main.getPetObject(dogName);
-			System.out.println("삭제 후: " + ((pet == null) 
-					? "그런 동물 없습니다."  : pet));
-			
-			PetDVO petDataObj = new PetDVO();
-			String name = "구름이";			 
-			petDataObj.setOwner("최주인");
-			petDataObj.setName(name); 
-			main.updatePetData(petDataObj);
-			
-			PetDVO petObj = new PetDVO();
-			petObj.setName("구름이");
-			petObj.setOwner("김재연");
-			petObj.setSpecies("강아지");
-			petObj.setSex('m');
-			Date today = getDate(2020, 11, 15);
-			petObj.setBirth(today);
+			PetDAO petDaoImpl =
+					(PetDAO) appContext.getBean("petDaoImpl");
 			/**
-			 * 생성된 애완동물을 DB pet 테이블에 삽입
+			 * 애완동물 목록 길이 출력
 			 */
-			int id = main.createPet(petObj);
-			System.out.println("새 애완동물 ID : " + id);
-
-			System.out.println(main.getAllSpecies());
-
-			System.out.println("암놈 목록");
-			for (PetDVO p : main.selectByGender("f")) {
-				System.out.println(p);
-			}
-			System.out.println("숫놈 목록");
-			for (PetDVO p : main.selectByGender("m")) {
-				System.out.println(p);
-			}
-			// 누리 소유자 이름 출력
-			String petName = "누리";
-			pet = main.getPetObject(petName);
-			System.out.println(petName + ": " + pet.getOwner());
-			// Printing pets data
-			List<PetDVO> allPets = main.getAllPetsData();
-			System.out.println("--- 애완동물 숫자 ----" + allPets.size());
+			List<PetDVO> pets = petDaoImpl.getAllPetsData();
+			System.out.println("--- pets ---" + pets.size());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -142,11 +96,9 @@ public class CoreMyBatisMain {
 	public List<PetDVO> selectByGender(String gender) 
 			throws Exception {
 		var inputMap = new Properties();
-//		HashMap <String, String> inputMap = 
-//				new HashMap <String, String>();
 		inputMap.put("sex", gender);
-		return getSqlSession().selectList("selectByGender", 
-				inputMap);
+		return getSqlSession().selectList("selectByGender",
+					inputMap);
 	}
 
 	public List<String> getAllSpecies() throws Exception {
