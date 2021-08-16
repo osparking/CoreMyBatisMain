@@ -1,6 +1,7 @@
 package com.ezen.mybatis.core; // 2 단계 type 값과 일치해야!
-import java.util.Date;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PetDVO implements Serializable { 
 	private static final long serialVersionUID = 5727276484706126393L;
@@ -11,6 +12,17 @@ public class PetDVO implements Serializable {
     private char sex;
     private Date birth;
     private Date death;
+    
+	@Override
+	public String toString() {
+		var sDate = new SimpleDateFormat("yyyy-MM-dd");
+		String birthStr = (birth == null? "" : sDate.format(birth));
+		String deathStr = (death == null? "" : sDate.format(death));
+		return "애완동몰[이름=" + name + ", 주인=" + owner + 
+				", 종류=" + species + ", 암수=" + sex
+				+ ", 출생=" + birthStr 
+				+ ", 사망=" + deathStr + "]";
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -38,8 +50,8 @@ public class PetDVO implements Serializable {
 	public char getSex() {
 		return sex;
 	}
-	public void setSex(char sex) {
-		this.sex = sex;
+	public void setSex(char gender) {
+		this.sex = gender;
 	}
 	public Date getBirth() {
 		return birth;
