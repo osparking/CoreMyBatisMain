@@ -24,6 +24,11 @@ public class CoreMyBatisMain {
 			// Printing pets data
 			List<PetDVO> allPets = main.getAllPetsData();
 			System.out.println("--- 애완동물 숫자 ----" + allPets.size());
+			
+			String petName = "누리";
+			var pet = main.getPetObject(petName);
+			System.out.println(petName + ": " + pet.getOwner());
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
