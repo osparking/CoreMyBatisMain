@@ -9,4 +9,5 @@ public interface PetDAO {
 	
 	List<PetDVO> petsByGender(String gender);
 	int insertPet(PetDVO petDVO);
+	void updatePetData(PetDVO petDVO) throws Exception;
 }

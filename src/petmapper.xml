@@ -42,5 +42,11 @@
 		VALUES (#{name}, #{owner}, #{species}, #{sex},
 		#{birth}, #{death})
 	</insert>
+	<update id="updatePetData" parameterType="java.util.Map">
+		UPDATE Pet p
+		SET p.owner	= #{owner}, p.death = #{death}
+		WHERE p.ID = #{id}
+	</update>
+	
 
 </mapper>
