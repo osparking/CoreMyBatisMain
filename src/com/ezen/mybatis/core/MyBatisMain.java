@@ -1,6 +1,6 @@
 package com.ezen.mybatis.core;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -113,6 +113,13 @@ public class MyBatisMain {
 			for (PetDVO p : petsIn)
 				System.out.println(p);
 
+			/** 
+			 * 누리 가 오늘 죽었다는 것을 갱신하자
+			 */
+			PetDVO petDVO = new PetDVO();
+			petDVO.setName("누리");
+			petDVO.setDeath(new Date());
+			petDaoImpl.updatePetDynamically(petDVO);	
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

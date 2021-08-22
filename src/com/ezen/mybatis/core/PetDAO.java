@@ -16,4 +16,5 @@ public interface PetDAO {
 	public List<PetDVO> findSnakePets();
 	
 	public List<PetDVO> selectPetsIn();
+	public void updatePetDynamically(PetDVO petDVO);
 }

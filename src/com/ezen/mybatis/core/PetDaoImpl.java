@@ -110,4 +110,16 @@ public class PetDaoImpl implements PetDAO {
 		inputMap.put("speciesList", speciesList);
 		return sqlSessionTemplate.selectList("selectPetsIn", inputMap); 
 	}
+
+	@Override
+	public void updatePetDynamically(PetDVO petDVO) {
+		HashMap<String, Object> inputMap = new HashMap<String, Object>();
+		
+		inputMap.put("birth", petDVO.getBirth());
+		inputMap.put("death", petDVO.getDeath());
+		inputMap.put("sex", petDVO.getSex());
+		inputMap.put("name", petDVO.getName());
+		
+		sqlSessionTemplate.update("updatePetDynamically", inputMap); 
+	}
 }
