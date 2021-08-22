@@ -75,7 +75,6 @@ public class CoreMyBatisMain {
 		sqlSession.update("deletePet", inputMap);
 		sqlSession.commit(); 
 	}
-
 	public static void main(String[] args) {
 		try (ClassPathXmlApplicationContext appContext = new 
 				ClassPathXmlApplicationContext(new String[] 
