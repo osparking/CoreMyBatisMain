@@ -26,5 +26,10 @@ public class PetDaoImpl implements PetDAO {
 		inputMap.put("name", petName);
 		return (PetDVO) sqlSessionTemplate.selectOne("getPetObject", inputMap);
 	}
+
+	@Override
+	public List<String> getAllSpecies() {
+		return sqlSessionTemplate.selectList("getAllSpecies");
+	}
 	
 }

@@ -5,14 +5,21 @@
 	<!-- Add SQL statements -->
 	<select id="getPetObject" parameterType="java.lang.String"
 		resultType="PetDVO">
-		SELECT ID as id, NAME as name, OWNER as owner, SPECIES as species,
-			SEX as sex, BIRTH as birth, DEATH as death
+		SELECT ID as id, NAME as name, OWNER as owner, SPECIES as
+		species,
+		SEX as sex, BIRTH as birth, DEATH as death
 		FROM Pet where name = #{name}
 	</select>
 	<select id="getAllPets" resultType="PetDVO">
-		SELECT ID as id, NAME as name, OWNER as owner,
-			SPECIES as species, SEX as sex, BIRTH as birth,
-			DEATH as death
+		SELECT ID as id, NAME as
+		name, OWNER as owner,
+		SPECIES as species, SEX as sex, BIRTH as birth,
+		DEATH as death
 		FROM Pet
 	</select>
+	<select id="getAllSpecies" resultType="java.lang.String">
+		SELECT distinct(SPECIES) as species
+		FROM Pet
+	</select>
+
 </mapper>

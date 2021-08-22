@@ -33,7 +33,15 @@ public class MyBatisMain {
 			List <PetDVO> allPets = petDaoImpl.getAllPetsData();
 			for (PetDVO aPet : allPets) {
 				System.out.println(aPet);
-			}			
+			}	
+			
+			/**
+			 * 모든 애완 동물 종류를 출력
+			 */
+			List <String> species = petDaoImpl.getAllSpecies();
+			for (String animal : species) {
+				System.out.println(animal);
+			}
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
