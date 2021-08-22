@@ -43,6 +43,14 @@ public class MyBatisMain {
 				System.out.println(animal);
 			}
 			
+			/**
+			 * 모든 애완 동물 암수 구별 목록 채취
+			 */
+			List <PetDVO> genderPets = petDaoImpl.petsByGender("f");
+			for (PetDVO p : genderPets) {
+				System.out.println(p);
+			}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
