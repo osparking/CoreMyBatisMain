@@ -117,6 +117,14 @@ public class CoreMyBatisMain {
 		
 		return getSqlSession().selectList("findAllSnakes", inputMap);
 	}
+	
+	public List<PetDVO> findSnakePets() throws Exception {
+		HashMap<String, String> inputMap = new HashMap<String, String>();
+		inputMap.put("species", "뱀");
+		inputMap.put("sex", "f");
+		inputMap.put("owner", "남");
+		return getSqlSession().selectList("findSnakePets", inputMap);
+	}
 
 	public static void main(String[] args) {
 		try {
@@ -179,6 +187,12 @@ public class CoreMyBatisMain {
 			System.out.println("--- 뱀 애완 동물들 ---");
 			System.out.println(allSnakes); 
 			
+			/**
+			 * 모든 뱀 애완 동물을 찾아서 출력 2
+			 */
+			List <PetDVO> snakePets = main.findSnakePets(); 
+			System.out.println("--- 뱀 애완 동물 2 ---");
+			System.out.println(snakePets);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

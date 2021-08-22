@@ -71,4 +71,18 @@
 			AND owner like #{owner}
 		</if>
 	</select>
+	<select id ="findSnakePets" parameterType ="PetDVO" resultType ="PetDVO">
+		SELECT * FROM Pet WHERE species = #{species}
+		<choose>
+			<when test ="sex != null">
+				AND sex = #{sex}
+			</when>
+			<when test ="owner != null">
+				AND owner like '%' || #{owner} || '%'
+			</when>
+			<otherwise>
+				AND name like '스%'
+			</otherwise>
+		</choose>
+	</select>		
 </mapper>
