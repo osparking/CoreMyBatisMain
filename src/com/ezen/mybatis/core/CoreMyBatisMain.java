@@ -136,6 +136,18 @@ public class CoreMyBatisMain {
 		inputMap.put("speciesList", speciesList);
 		return getSqlSession().selectList("selectPetsIn", inputMap);
 	}
+	
+	public void updatePetDynamically(PetDVO petDVO) throws Exception {
+		HashMap<String, Object> inputMap = new HashMap<String, Object>();
+		inputMap.put("birth", petDVO.getBirth());
+		inputMap.put("death", petDVO.getDeath());
+		inputMap.put("sex", petDVO.getSex());
+		inputMap.put("name", petDVO.getName());
+		System.out.println("--- 갱신 정보 지도 ---" + inputMap);
+		SqlSession sqlSession = getSqlSession();
+		sqlSession.update("updatePetDynamically", inputMap);
+		sqlSession.commit(); 
+	}
 
 	public static void main(String[] args) {
 		try {
@@ -209,6 +221,14 @@ public class CoreMyBatisMain {
 			System.out.println("--- 선택 종에 포함되는 애완 동물들 ---");
 			for (PetDVO p: selectedPets)
 				System.out.println(p);
+			
+			PetDVO petDVO = new PetDVO();
+			petDVO.setName("스륵이");
+			petDVO.setDeath(new Date());
+			petDVO.setSex('m');
+			// 자료를 갱신한다.
+			main.updatePetDynamically(petDVO);
+			
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

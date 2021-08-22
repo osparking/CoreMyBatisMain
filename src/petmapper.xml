@@ -91,5 +91,15 @@
 				open ="(" separator =", " close =")">
 			#{item}
 		</foreach> 
-	</select>		
+	</select>
+	<update id="updatePetDynamically" parameterType="java.util.Map">
+		UPDATE Pet
+		<set>
+			<if test="birth != null"> birth = #{birth}, </if>
+			<if test="death != null"> death = #{death}, </if>
+			<if test="sex != null"> sex = #{sex} </if>
+		</set>
+		WHERE name = #{name}
+	</update>
+		
 </mapper>
