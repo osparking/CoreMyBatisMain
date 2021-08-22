@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import jbpark.utility.Util;
+
 
 public class MyBatisMain {
 
@@ -50,6 +52,21 @@ public class MyBatisMain {
 			for (PetDVO p : genderPets) {
 				System.out.println(p);
 			}
+			
+			/**
+			 * 애완동물 생성하여 삽입
+			 */
+			PetDVO newPet = new PetDVO();
+
+			newPet.setBirth(Util.getDate("1992-01-03"));
+			newPet.setDeath(null);
+			newPet.setName("Rolf");
+			newPet.setOwner("종범3");;
+			newPet.setSex('m');;
+			newPet.setSpecies("개");
+			
+			int petId = petDaoImpl.insertPet(newPet);
+			System.out.println("ID: " + petId);
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

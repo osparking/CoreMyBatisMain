@@ -8,4 +8,5 @@ public interface PetDAO {
 	public List<String> getAllSpecies();
 	
 	List<PetDVO> petsByGender(String gender);
+	int insertPet(PetDVO petDVO);
 }

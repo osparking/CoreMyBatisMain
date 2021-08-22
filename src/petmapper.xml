@@ -27,11 +27,20 @@
 		resultType="PetDVO">
 		SELECT ID as id, NAME as
 		name, OWNER as owner,
-		SPECIES as species, SEX as sex,
+		SPECIES as
+		species, SEX as sex,
 		BIRTH as birth,
 		DEATH as death
 		FROM Pet
-		WHERE sex = #{gender}
+		WHERE sex =
+		#{gender}
 	</select>
+	<insert id="insertPet" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO Pet (NAME, OWNER, SPECIES, SEX,
+		BIRTH, DEATH)
+		VALUES (#{name}, #{owner}, #{species}, #{sex},
+		#{birth}, #{death})
+	</insert>
 
 </mapper>
