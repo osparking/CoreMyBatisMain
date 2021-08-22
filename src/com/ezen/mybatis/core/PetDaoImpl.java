@@ -89,4 +89,13 @@ public class PetDaoImpl implements PetDAO {
 
 		return sqlSessionTemplate.selectList("findAllSnakes", inputMap); 
 	}
+
+	@Override
+	public List<PetDVO> findSnakePets() {
+		HashMap<String, String> inputMap = new HashMap<String, String>();
+		inputMap.put("species", "뱀");
+		inputMap.put("sex", "m");
+		inputMap.put("owner", "남%");
+		return sqlSessionTemplate.selectList("findSnakePets", inputMap);
+	}
 }

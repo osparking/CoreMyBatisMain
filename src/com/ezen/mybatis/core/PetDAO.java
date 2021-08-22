@@ -13,4 +13,5 @@ public interface PetDAO {
 	
 	int deletePet(String species, String name) throws Exception;
 	public List<PetDVO> findAllSnakes();
+	public List<PetDVO> findSnakePets();
 }

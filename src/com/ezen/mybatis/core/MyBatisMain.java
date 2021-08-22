@@ -99,6 +99,12 @@ public class MyBatisMain {
 			for (PetDVO snake: snakes) 
 				System.out.println(snake);
 			
+			/**
+			 * 남씨가 키우는 뱀을 나열하자 - switch
+			 */
+			List<PetDVO> snakePets = petDaoImpl.findSnakePets();
+			for (PetDVO snake : snakePets)
+				System.out.println(snake);			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

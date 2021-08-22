@@ -37,19 +37,23 @@
 	</select>
 	<insert id="insertPet" parameterType="java.util.Map"
 		useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO Pet (NAME, OWNER, SPECIES, SEX,
+		INSERT INTO Pet (NAME, OWNER,
+		SPECIES, SEX,
 		BIRTH, DEATH)
-		VALUES (#{name}, #{owner}, #{species}, #{sex},
+		VALUES (#{name}, #{owner}, #{species},
+		#{sex},
 		#{birth}, #{death})
 	</insert>
 	<update id="updatePetData" parameterType="java.util.Map">
 		UPDATE Pet p
-		SET p.owner	= #{owner}, p.death = #{death}
+		SET p.owner
+		= #{owner}, p.death = #{death}
 		WHERE p.ID = #{id}
 	</update>
 	<delete id="deletePet" parameterType="java.util.Map">
 		DELETE FROM Pet
-		WHERE name = #{name} AND species = #{species}
+		WHERE name =
+		#{name} AND species = #{species}
 	</delete>
 	<!-- PetDVO 혹은 parameterType="java.util.Map" -->
 	<select id="findAllSnakes" parameterType="java.util.Map"
@@ -62,5 +66,21 @@
 			AND owner like #{owner}
 		</if>
 	</select>
-	
+	<select id="findSnakePets" parameterType="PetDVO"
+		resultType="PetDVO">
+		SELECT * FROM Pet WHERE species = #{species}
+		<choose>
+			<when test="sex != null">
+				AND sex = #{sex}
+			</when>
+			<when test="owner != null">
+				AND owner like '%' || #{owner} || '%'
+			</when>
+			<otherwise>
+				AND name like '스%'      <!-- ("owner", "남") 으로 인해 작동함 -->
+			</otherwise>
+		</choose>
+	</select>
+
+
 </mapper>
