@@ -92,6 +92,13 @@ public class MyBatisMain {
 			int delCnt = petDaoImpl.deletePet("개", "Rolf");
 			System.out.println("삭제된 애완 동물 수: " + delCnt);
 			
+			/**
+			 * 남씨가 키우는 뱀을 나열하자.
+			 */
+			List<PetDVO> snakes = petDaoImpl.findAllSnakes();
+			for (PetDVO snake: snakes) 
+				System.out.println(snake);
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

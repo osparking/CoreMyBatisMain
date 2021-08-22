@@ -51,4 +51,16 @@
 		DELETE FROM Pet
 		WHERE name = #{name} AND species = #{species}
 	</delete>
+	<!-- PetDVO 혹은 parameterType="java.util.Map" -->
+	<select id="findAllSnakes" parameterType="java.util.Map"
+		resultType="PetDVO">
+		SELECT * FROM Pet WHERE species = #{species}
+		<if test="sex != null">
+			AND sex = #{sex}
+		</if>
+		<if test="owner != null">
+			AND owner like #{owner}
+		</if>
+	</select>
+	
 </mapper>
