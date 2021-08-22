@@ -1,6 +1,6 @@
 package com.ezen.mybatis.core;
 
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,5 +97,17 @@ public class PetDaoImpl implements PetDAO {
 		inputMap.put("sex", "m");
 		inputMap.put("owner", "남%");
 		return sqlSessionTemplate.selectList("findSnakePets", inputMap);
+	}
+
+	@Override
+	public List<PetDVO> selectPetsIn() {
+		HashMap<String, Object> inputMap = new HashMap<String, Object>();
+		List<String> speciesList = new ArrayList<String>();
+
+		speciesList.add("강아지");
+		speciesList.add("고양이");
+		speciesList.add("뱀");
+		inputMap.put("speciesList", speciesList);
+		return sqlSessionTemplate.selectList("selectPetsIn", inputMap); 
 	}
 }

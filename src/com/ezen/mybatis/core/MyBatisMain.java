@@ -104,7 +104,15 @@ public class MyBatisMain {
 			 */
 			List<PetDVO> snakePets = petDaoImpl.findSnakePets();
 			for (PetDVO snake : snakePets)
-				System.out.println(snake);			
+				System.out.println(snake);	
+			
+			/**
+			 * 다음 종에 속한 애완동물 나열 마바-스프링-foreach
+			 */
+			List<PetDVO> petsIn = petDaoImpl.selectPetsIn();
+			for (PetDVO p : petsIn)
+				System.out.println(p);
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
