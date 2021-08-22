@@ -70,4 +70,13 @@ public class PetDaoImpl implements PetDAO {
 	
 		sqlSessionTemplate.update("updatePetData", inputMap);
 	}
+
+	@Override
+	public int deletePet(String species, String name) throws Exception {
+		HashMap<String, String> inputMap = new HashMap<String, String>();
+		inputMap.put("species", species);
+		inputMap.put("name", name);
+
+		return sqlSessionTemplate.delete("deletePet", inputMap);
+	}
 }

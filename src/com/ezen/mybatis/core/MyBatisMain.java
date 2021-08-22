@@ -1,5 +1,6 @@
 package com.ezen.mybatis.core;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -84,6 +85,12 @@ public class MyBatisMain {
 //			PetDVO changedPet = petDaoImpl.getPetObject(petId);
 			System.out.println("--- 애완동물 ---");
 //			System.out.println(changedPet);
+			
+			/**
+			 * 특정 종(species)과 이름이 주어졌을 때 애완동물을 삭제하기
+			 */
+			int delCnt = petDaoImpl.deletePet("개", "Rolf");
+			System.out.println("삭제된 애완 동물 수: " + delCnt);
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

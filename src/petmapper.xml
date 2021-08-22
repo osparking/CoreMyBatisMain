@@ -47,6 +47,8 @@
 		SET p.owner	= #{owner}, p.death = #{death}
 		WHERE p.ID = #{id}
 	</update>
-	
-
+	<delete id="deletePet" parameterType="java.util.Map">
+		DELETE FROM Pet
+		WHERE name = #{name} AND species = #{species}
+	</delete>
 </mapper>
