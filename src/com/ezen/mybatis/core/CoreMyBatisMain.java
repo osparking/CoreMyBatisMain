@@ -13,6 +13,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import jbpark.utility.Util;
+
 public class CoreMyBatisMain {
 	//@formatter:off
 	public PetDVO getPetObject(String petName) throws Exception {
@@ -141,7 +143,6 @@ public class CoreMyBatisMain {
 		HashMap<String, Object> inputMap = new HashMap<String, Object>();
 		inputMap.put("birth", petDVO.getBirth());
 		inputMap.put("death", petDVO.getDeath());
-		inputMap.put("sex", petDVO.getSex());
 		inputMap.put("name", petDVO.getName());
 		System.out.println("--- 갱신 정보 지도 ---" + inputMap);
 		SqlSession sqlSession = getSqlSession();
@@ -224,11 +225,10 @@ public class CoreMyBatisMain {
 			
 			PetDVO petDVO = new PetDVO();
 			petDVO.setName("스륵이");
+			petDVO.setBirth(Util.getDate("1991-1-3"));
 			petDVO.setDeath(new Date());
-			petDVO.setSex('m');
 			// 자료를 갱신한다.
 			main.updatePetDynamically(petDVO);
-			
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
