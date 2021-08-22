@@ -84,5 +84,12 @@
 				AND name like '스%'
 			</otherwise>
 		</choose>
+	</select>
+	<select id="selectPetsIn" resultType="PetDVO">
+		SELECT * FROM Pet P WHERE species IN
+		<foreach item="item" index="index" collection="speciesList"
+				open ="(" separator =", " close =")">
+			#{item}
+		</foreach> 
 	</select>		
 </mapper>

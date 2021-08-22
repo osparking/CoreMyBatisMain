@@ -1,6 +1,7 @@
 package com.ezen.mybatis.core;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -125,6 +126,16 @@ public class CoreMyBatisMain {
 		inputMap.put("owner", "남");
 		return getSqlSession().selectList("findSnakePets", inputMap);
 	}
+	
+	public List<PetDVO> selectPetsIn() throws Exception {
+		HashMap<String, Object> inputMap = new HashMap<String, Object>();
+		List<String> speciesList = new ArrayList<String>();
+		speciesList.add("강아지");
+		speciesList.add("고양이");
+		speciesList.add("뱀");
+		inputMap.put("speciesList", speciesList);
+		return getSqlSession().selectList("selectPetsIn", inputMap);
+	}
 
 	public static void main(String[] args) {
 		try {
@@ -193,6 +204,12 @@ public class CoreMyBatisMain {
 			List <PetDVO> snakePets = main.findSnakePets(); 
 			System.out.println("--- 뱀 애완 동물 2 ---");
 			System.out.println(snakePets);
+			
+			List<PetDVO> selectedPets = main.selectPetsIn();
+			System.out.println("--- 선택 종에 포함되는 애완 동물들 ---");
+			for (PetDVO p: selectedPets)
+				System.out.println(p);
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
