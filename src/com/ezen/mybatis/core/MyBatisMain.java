@@ -27,6 +27,14 @@ public class MyBatisMain {
 			System.out.println("--- 애완동물 ---");
 			System.out.println(pet);
 			
+			/**
+			 * 모든 애완 동물 정보 출력
+			 */
+			List <PetDVO> allPets = petDaoImpl.getAllPetsData();
+			for (PetDVO aPet : allPets) {
+				System.out.println(aPet);
+			}			
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

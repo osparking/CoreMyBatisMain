@@ -26,4 +26,5 @@ public class PetDaoImpl implements PetDAO {
 		inputMap.put("name", petName);
 		return (PetDVO) sqlSessionTemplate.selectOne("getPetObject", inputMap);
 	}
+	
 }
