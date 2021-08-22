@@ -80,6 +80,43 @@ public class CoreMyBatisMain {
 		sqlSession.update("deletePet", inputMap);
 		sqlSession.commit(); 
 	}
+	
+	public List<PetDVO> selectByGender(String gender) 
+			throws Exception {
+		var inputMap = new Properties();
+//		HashMap <String, String> inputMap = 
+//				new HashMap <String, String>();
+		inputMap.put("sex", gender);
+		return getSqlSession().selectList("selectByGender", 
+				inputMap);
+	}
+
+	public List<String> getAllSpecies() throws Exception {
+		return getSqlSession().selectList("getAllSpecies");
+	}
+
+	private static SqlSession getSqlSession() throws Exception {
+		String resource = "core-mybatis-config.xml";
+		InputStream inputStream = 
+				Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = 
+				new SqlSessionFactoryBuilder().build(inputStream);
+		return sqlSessionFactory.openSession();
+	}
+
+	public List<PetDVO> getAllPetsData() throws Exception {
+		return getSqlSession().selectList("getAllPets");
+	}
+	
+	public List<PetDVO> findAllSnakes() throws Exception {
+		HashMap <String, String> inputMap = new HashMap <String, String>();
+		
+		inputMap.put("species", "뱀");
+		inputMap.put("sex", "f");
+		inputMap.put("owner", "남%");
+		
+		return getSqlSession().selectList("findAllSnakes", inputMap);
+	}
 
 	public static void main(String[] args) {
 		try {
@@ -134,35 +171,17 @@ public class CoreMyBatisMain {
 			// Printing pets data
 			List<PetDVO> allPets = main.getAllPetsData();
 			System.out.println("--- 애완동물 숫자 ----" + allPets.size());
+			
+			/**
+			 * 모든 뱀 애완 동물을 찾아서 출력
+			 */
+			List<PetDVO> allSnakes = main.findAllSnakes(); 
+			System.out.println("--- 뱀 애완 동물들 ---");
+			System.out.println(allSnakes); 
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-
-	public List<PetDVO> selectByGender(String gender) 
-			throws Exception {
-		var inputMap = new Properties();
-//		HashMap <String, String> inputMap = 
-//				new HashMap <String, String>();
-		inputMap.put("sex", gender);
-		return getSqlSession().selectList("selectByGender", 
-				inputMap);
-	}
-
-	public List<String> getAllSpecies() throws Exception {
-		return getSqlSession().selectList("getAllSpecies");
-	}
-
-	private static SqlSession getSqlSession() throws Exception {
-		String resource = "core-mybatis-config.xml";
-		InputStream inputStream = 
-				Resources.getResourceAsStream(resource);
-		SqlSessionFactory sqlSessionFactory = 
-				new SqlSessionFactoryBuilder().build(inputStream);
-		return sqlSessionFactory.openSession();
-	}
-
-	public List<PetDVO> getAllPetsData() throws Exception {
-		return getSqlSession().selectList("getAllPets");
-	}
+	
 }

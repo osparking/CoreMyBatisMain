@@ -61,4 +61,14 @@
 		DEATH as death
 		FROM Pet
 	</select>
+	
+	<select id="findAllSnakes" parameterType="PetDVO" resultType="PetDVO">
+		SELECT * FROM Pet WHERE species = #{species}
+		<if test="sex != null">
+			AND sex = #{sex}
+		</if>
+		<if test="owner != null">
+			AND owner like #{owner}
+		</if>
+	</select>
 </mapper>
