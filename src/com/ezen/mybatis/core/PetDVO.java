@@ -13,16 +13,16 @@ public class PetDVO implements Serializable {
     private Date birth;
     private Date death;
     
-	@Override
-	public String toString() {
-		var sDate = new SimpleDateFormat("yyyy-MM-dd");
-		String birthStr = (birth == null? "" : sDate.format(birth));
-		String deathStr = (death == null? "" : sDate.format(death));
-		return "애완동몰[이름=" + name + ", 주인=" + owner + 
-				", 종류=" + species + ", 암수=" + sex
-				+ ", 출생=" + birthStr 
-				+ ", 사망=" + deathStr + "]";
-	}
+    @Override
+    public String toString() {
+    	String bDay = Commons.getY4MMDD(birth);
+    	String dDay = Commons.getY4MMDD(birth);
+    	String output = "애완동물 [이름=" + name + ", 소유자=" + owner;
+    	output += ", 종류=" + species + ", 암수=" + sex;
+    	output += ", 출생=" + bDay + ", 사망="	+ dDay + "]"; 
+    	return  output; 
+    }
+		
 	public Integer getId() {
 		return id;
 	}
