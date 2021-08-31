@@ -10,5 +10,6 @@ import java.util.List;
 public interface PetDAO {
 	void callReadPet();
 	List <PetDVO> callReadAllPets();
+	void callPetOwnerFunction();
 }
 

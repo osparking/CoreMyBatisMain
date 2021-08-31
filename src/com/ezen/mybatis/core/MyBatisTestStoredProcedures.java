@@ -19,6 +19,8 @@ public class MyBatisTestStoredProcedures {
 
 			System.out.println("숫자: " + petList.size());
 			petList.forEach(System.out::println);
+			
+			petDAOImpl.callPetOwnerFunction();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

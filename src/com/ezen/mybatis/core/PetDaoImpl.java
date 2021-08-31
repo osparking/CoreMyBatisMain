@@ -3,6 +3,7 @@ package com.ezen.mybatis.core;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -39,10 +40,20 @@ public class PetDaoImpl implements PetDAO {
 
 	@Override
 	public List<PetDVO> callReadAllPets() {
-		List<PetDVO> outputData = sqlSessionTemplate.selectList(
-				"callReadAllPets");
+		List<PetDVO> outputData = sqlSessionTemplate.selectList("callReadAllPets");
 		return outputData;
 	}
 
+	@Override
+	public void callPetOwnerFunction() {
+		Map<String, String> inputMap = new HashMap<>();
+		inputMap.put("name", "스륵이");
 
+		inputMap = sqlSessionTemplate.selectOne("callPetOwnerFunction", inputMap);
+
+		/**
+		 * 함수 호출 반환 값 콘솔 출력
+		 */
+		System.out.println("--- 애완동물 주인 사람 : " + inputMap.get("owner"));
+	}
 }
