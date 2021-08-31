@@ -2,100 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="petmapper">
-	<!-- Add SQL statements -->
-	<select id="getPetObject" parameterType="java.lang.String"
-		resultType="PetDVO">
-		SELECT ID as id, NAME as name, OWNER as owner, SPECIES as
-		species,
-		SEX as sex, BIRTH as birth, DEATH as death
-		FROM Pet where name
-		= #{name}
+	<select id="callReadPet" parameterType="java.util.Map"
+		resultType="java.util.Map" statementType="CALLABLE">
+		{ 
+			CALL read_pet(
+				#{name, mode = IN, jdbcType = VARCHAR},
+				#{owner, mode = OUT, jdbcType = VARCHAR},
+				#{species, mode = OUT, jdbcType = VARCHAR},
+				#{sex, mode = OUT, jdbcType = VARCHAR},
+				#{birth, mode = OUT, jdbcType = DATE},
+				#{death, mode = OUT, jdbcType = DATE}
+			)
+		}
 	</select>
-	<select id="getAllPets" resultType="PetDVO">
-		SELECT ID as id, NAME as
-		name, OWNER as owner,
-		SPECIES as species, SEX as sex, BIRTH as birth,
-		DEATH as death
-		FROM Pet
-	</select>
-	<select id="getAllSpecies" resultType="java.lang.String">
-		SELECT distinct(SPECIES)
-		as species
-		FROM Pet
-	</select>
-	<select id="petsByGender" parameterType="java.lang.String"
-		resultType="PetDVO">
-		SELECT ID as id, NAME as
-		name, OWNER as owner,
-		SPECIES as
-		species, SEX as sex,
-		BIRTH as birth,
-		DEATH as death
-		FROM Pet
-		WHERE sex =
-		#{gender}
-	</select>
-	<insert id="insertPet" parameterType="java.util.Map"
-		useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO Pet (NAME, OWNER,
-		SPECIES, SEX,
-		BIRTH, DEATH)
-		VALUES (#{name}, #{owner}, #{species},
-		#{sex},
-		#{birth}, #{death})
-	</insert>
-	<update id="updatePetData" parameterType="java.util.Map">
-		UPDATE Pet p
-		SET p.owner
-		= #{owner}, p.death = #{death}
-		WHERE p.ID = #{id}
-	</update>
-	<delete id="deletePet" parameterType="java.util.Map">
-		DELETE FROM Pet
-		WHERE name =
-		#{name} AND species = #{species}
-	</delete>
-	<!-- PetDVO 혹은 parameterType="java.util.Map" -->
-	<select id="findAllSnakes" parameterType="java.util.Map"
-		resultType="PetDVO">
-		SELECT * FROM Pet WHERE species = #{species}
-		<if test="sex != null">
-			AND sex = #{sex}
-		</if>
-		<if test="owner != null">
-			AND owner like #{owner}
-		</if>
-	</select>
-	<select id="findSnakePets" parameterType="PetDVO"
-		resultType="PetDVO">
-		SELECT * FROM Pet WHERE species = #{species}
-		<choose>
-			<when test="sex != null">
-				AND sex = #{sex}
-			</when>
-			<when test="owner != null">
-				AND owner like '%' || #{owner} || '%'
-			</when>
-			<otherwise>
-				AND name like '스%'      <!-- ("owner", "남") 으로 인해 작동함 -->
-			</otherwise>
-		</choose>
-	</select>
-	<select id="selectPetsIn" resultType="PetDVO">
-		SELECT * FROM Pet P WHERE species IN
-		<foreach item="item" index="index" collection="speciesList"
-				open ="(" separator =", " close =")">
-			#{item}
-		</foreach> 
-	</select>
-	<update id="updatePetDynamically" parameterType="java.util.Map">
-		UPDATE Pet	
-			<set>	
-				<if test="birth != null"> birth = #{birth}, </if>	
-				<if test="death != null"> death = #{death}, </if>	
-				<if test="sex != null"> sex = #{sex} </if>	
-			</set>
-		WHERE name = #{name} 
-	</update>
-
 </mapper>
