@@ -18,7 +18,8 @@ public class PetDVO implements Serializable {
 		var sDate = new SimpleDateFormat("yyyy-MM-dd");
 		String birthStr = (birth == null? "" : sDate.format(birth));
 		String deathStr = (death == null? "" : sDate.format(death));
-		return "애완동몰[이름=" + name + ", 주인=" + owner + 
+		return 
+//				"애완동몰[이름=" + name + ", 주인=" + owner + 
 				", 종류=" + species + ", 암수=" + sex
 				+ ", 출생=" + birthStr 
 				+ ", 사망=" + deathStr + "]";
