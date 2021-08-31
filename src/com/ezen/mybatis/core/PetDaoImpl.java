@@ -2,6 +2,7 @@ package com.ezen.mybatis.core;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -35,5 +36,13 @@ public class PetDaoImpl implements PetDAO {
 		System.out.println("--- 출생 : " + birth);
 		System.out.println("--- 사망 : " + death);
 	}
+
+	@Override
+	public List<PetDVO> callReadAllPets() {
+		List<PetDVO> outputData = sqlSessionTemplate.selectList(
+				"callReadAllPets");
+		return outputData;
+	}
+
 
 }

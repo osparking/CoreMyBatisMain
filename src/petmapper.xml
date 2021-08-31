@@ -2,17 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="petmapper">
+
+	<select id="callReadAllPets" resultType="PetDVO"
+		statementType="CALLABLE">
+		{ CALL read_all_pets() }
+	</select>
+
 	<select id="callReadPet" parameterType="java.util.Map"
 		resultType="java.util.Map" statementType="CALLABLE">
-		{ 
-			CALL read_pet(
-				#{name, mode = IN, jdbcType = VARCHAR},
-				#{owner, mode = OUT, jdbcType = VARCHAR},
-				#{species, mode = OUT, jdbcType = VARCHAR},
-				#{sex, mode = OUT, jdbcType = VARCHAR},
-				#{birth, mode = OUT, jdbcType = DATE},
-				#{death, mode = OUT, jdbcType = DATE}
-			)
+		{
+		CALL read_pet(
+		#{name, mode = IN, jdbcType = VARCHAR},
+		#{owner, mode = OUT, jdbcType = VARCHAR},
+		#{species, mode = OUT, jdbcType = VARCHAR},
+		#{sex, mode = OUT, jdbcType = VARCHAR},
+		#{birth, mode = OUT, jdbcType = DATE},
+		#{death, mode = OUT, jdbcType = DATE}
+		)
 		}
 	</select>
 </mapper>

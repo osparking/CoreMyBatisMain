@@ -1,5 +1,7 @@
 package com.ezen.mybatis.core;
 
+import java.util.List;
+
 /**
  * 파일 이름: PetDAO.java
  * @author Jongbum Park
@@ -7,5 +9,6 @@ package com.ezen.mybatis.core;
  */
 public interface PetDAO {
 	void callReadPet();
+	List <PetDVO> callReadAllPets();
 }
 
