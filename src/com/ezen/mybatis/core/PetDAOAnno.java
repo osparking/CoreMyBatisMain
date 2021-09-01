@@ -1,6 +1,7 @@
 package com.ezen.mybatis.core;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -21,6 +22,9 @@ public class PetDAOAnno implements PetDAO {
 	public List<PetDVO> callReadAllPets() throws Exception {
 		SqlSession sqlSession = getSqlSession();
 		PetMapper mapper = sqlSession.getMapper(PetMapper.class);
-		return mapper.callReadAllPets();
+		
+		var outputMap = new HashMap<String, List<PetDVO>>();
+		
+		return mapper.callReadAllPets();		
 	}
 }
