@@ -11,10 +11,7 @@
 		<setting name="defaultExecutorType" value="SIMPLE" />
 		<setting name="defaultStatementTimeout" value="100" />
 	</settings>
-	<typeAliases>
-		<typeAlias alias="PetDVO"
-			type="com.ezen.mybatis.core.PetDVO" />
-	</typeAliases>
+
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -27,7 +24,5 @@
 			</dataSource>
 		</environment>
 	</environments>
-	<mappers>
-		<mapper resource="petmapperdata.xml" />
-	</mappers>
+
 </configuration>

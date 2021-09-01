@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class PetDaoImpl implements PetDao {
+public class PetDaoAnno implements PetDao {
 	private static SqlSession getSqlSession() throws Exception {
 		String resource = "java-mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
@@ -26,5 +26,12 @@ public class PetDaoImpl implements PetDao {
 //				new HashMap<String, List<PetDVO>>();
 		
 		return mapper.callReadAllPets();		
+	}
+
+	@Override
+	public void callReadPet(PetDVO petDVO) throws Exception {
+		SqlSession sqlSession = getSqlSession();
+		PetMapper mapper = sqlSession.getMapper(PetMapper.class);
+		mapper.callReadPet(petDVO);
 	}
 }
