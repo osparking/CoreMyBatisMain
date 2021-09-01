@@ -13,13 +13,12 @@ public class AnnoCursorMain {
 	}
 
 	private void callReadAllPets() throws Exception {
-		PetDAO petDAO = new PetDAOAnno();
+		PetDao petDAO = new PetDaoImpl();
 		System.out.println("-- 애완 목록 --");
-		
 		List<PetDVO> petList = petDAO.callReadAllPets();
-		
 		for (PetDVO pet : petList) {
 			System.out.println("\t" + pet);
 		}
 	}
+
 }
