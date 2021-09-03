@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="petmapper">
+ 	<insert id="createPet" parameterType="java.util.Map"
+ 		useGeneratedKeys="true" keyProperty="id">
+ 		INSERT INTO Pet (NAME, OWNER, SPECIES, SEX, BIRTH)
+ 		VALUES (#{name}, #{owner}, #{species}, #{sex}, #{birth}) 	
+	</insert>
+ 	<update id="updatePetData" parameterType="java.util.Map">
+ 		UPDATE Pet p 
+		SET p.death = #{death} 
+		WHERE p.name = #{name} 	
+	</update> 
+</mapper>
