@@ -1,10 +1,12 @@
 package com.learning.db.mybatis.tx.dao;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -104,6 +106,55 @@ public class PetDAOImpl implements PetDAO {
 				}
 			}
 		});
+	}
 
+	@Override
+	@Transactional(readOnly = false)
+	public void doInsertAndUpdateInTxAnno() {
+		PetDVO petDVO = new PetDVO();
+		petDVO.setName("날씨니");
+		petDVO.setOwner("국사봉");
+		petDVO.setSpecies("족제비");
+		petDVO.setSex("f");
+
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, -1);
+		petDVO.setBirth(cal.getTime());
+
+		/**
+		 * 행 삽입
+		 */
+		insertPet(petDVO);
+
+		/*
+		 * 의도적 예외 유발
+		 */
+		int i = 0;
+		int j = 100 / i;
+
+		/**
+		 * 행 갱신
+		 */
+		petDVO.setSex("m");
+		updatePetData(petDVO);
+		System.out.println("삽입 및 갱신 성공");
+	}
+	
+	private void insertPet(PetDVO petDVO) {
+		HashMap<String, Object> inputMap = new HashMap<String, Object>();
+		inputMap.put("name", petDVO.getName());
+		inputMap.put("owner", petDVO.getOwner());
+		inputMap.put("species", petDVO.getSpecies());
+		inputMap.put("sex", petDVO.getSex());
+		inputMap.put("birth", petDVO.getBirth());
+		sqlSessionTemplate.insert("createPet", inputMap);
+	}
+	
+	private void updatePetData(PetDVO petDVO) {
+		HashMap<String, Object> inputMap = new HashMap<String, Object>();
+		inputMap.put("birth", petDVO.getBirth());
+		inputMap.put("sex", petDVO.getSex());
+		inputMap.put("name", petDVO.getName());
+		sqlSessionTemplate.update("updatePetData", inputMap);
 	}
 }
